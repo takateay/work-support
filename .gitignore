@@ -1,5 +1,0 @@
-installer/
-work/
-workspace/
-!.gitignore
-tool/!.gitkeep
