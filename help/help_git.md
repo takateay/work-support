@@ -79,6 +79,10 @@ Gitの設定ファイルは3種類ある。
     ```
     git config --local gui.encoding utf-8
     ```
+- すでにaddしているものをバージョン管理から対象外にする
+```
+git rm --cached {ファイル名}
+```
 # git-flow
 ## 概要
 git-flowは、正確にいうと Vincent Driessen 氏が提唱する「A successful Git branching model」というブランチモデルをサポートするツール（コマンド）の名称です。

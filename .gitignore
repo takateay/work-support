@@ -2,4 +2,4 @@ installer/
 work/
 workspace/
 !.gitignore
-!.gitkeep
+tool/!.gitkeep
