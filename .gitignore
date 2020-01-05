@@ -1,3 +1,5 @@
 installer/
 work/
 workspace/
+!.gitignore
+!.gitkeep
