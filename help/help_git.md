@@ -83,6 +83,7 @@ Gitの設定ファイルは3種類ある。
 ```
 git rm --cached {ファイル名}
 ```
+# バージョン管理対象外にする(.gitignore)
 # git-flow
 ## 概要
 git-flowは、正確にいうと Vincent Driessen 氏が提唱する「A successful Git branching model」というブランチモデルをサポートするツール（コマンド）の名称です。
