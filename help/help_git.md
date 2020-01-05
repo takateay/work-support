@@ -107,3 +107,25 @@ git-flowは、正確にいうと Vincent Driessen 氏が提唱する「A success
     プロジェクトによっては不要ですが、旧バージョンをサポートし続けなければいけないプロジェクトでは support ブランチが必要です。support ブランチでは、旧バージョンの保守とリリースを行います。サポートが必要なバージョンの master ブランチのコミットから派生させ、サポートを終了するまで独立してバグフィックスやリリースを行います。
 
 > https://tracpath.com/bootcamp/learning_git_git_flow.html
+
+- git-flowモデルでリポジトリを作成する（masterブランチとdevelopブランチを作成）
+    ```
+    git flow init
+    ```
+- developブランチからfeatureブランチを作成
+    ```
+    git flow feature start {リポジトリ名}
+    ```
+- featureブランチをdevelopブランチにマージし、featureブランチを削除
+    ```
+    git flow feature finish {リポジトリ名}
+    ```
+    ```
+- developブランチからreleaseブランチを作成
+    ```
+    git flow release start {リポジトリ名}
+- releaseブランチをdevelopブランチにマージし、releaseブランチを削除
+    ```
+    git flow release finish {リポジトリ名}
+    ```
+    ```
