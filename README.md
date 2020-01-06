@@ -17,7 +17,7 @@
 |ブラウザ|Edge,IE,Chrome|
 |ターミナル|Git-Bash,PowerShell,MS-DOS,Cygwin,Teratarm|
 |バージョン管理|Git,SVN|
-|プログラミング言語|Java,ECMAScript,C#,VB,PLSQL|
+|プログラミング言語|Java,ECMAScript,C#,VB,PLSQL,VBA|
 |その他言語|HTML,CSS,Markdown,SQL,ShellScript|
 |言語フレームワーク|Spring,Struts,BootStrap|
 |プロジェクト管理|Redmine|
