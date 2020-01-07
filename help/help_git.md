@@ -79,6 +79,11 @@ Gitの設定ファイルは3種類ある。
     ```
     git config --local gui.encoding utf-8
     ```
+- すでにaddしているものをバージョン管理から対象外にする
+```
+git rm --cached {ファイル名}
+```
+# バージョン管理対象外にする(.gitignore)
 # git-flow
 ## 概要
 git-flowは、正確にいうと Vincent Driessen 氏が提唱する「A successful Git branching model」というブランチモデルをサポートするツール（コマンド）の名称です。
@@ -107,11 +112,12 @@ git-flowは、正確にいうと Vincent Driessen 氏が提唱する「A success
     プロジェクトによっては不要ですが、旧バージョンをサポートし続けなければいけないプロジェクトでは support ブランチが必要です。support ブランチでは、旧バージョンの保守とリリースを行います。サポートが必要なバージョンの master ブランチのコミットから派生させ、サポートを終了するまで独立してバグフィックスやリリースを行います。
 
 > https://tracpath.com/bootcamp/learning_git_git_flow.html
-
+## 新規作成
 - git-flowモデルでリポジトリを作成する（masterブランチとdevelopブランチを作成）
     ```
     git flow init
     ```
+## 開発時
 - developブランチからfeatureブランチを作成
     ```
     git flow feature start {リポジトリ名}
@@ -120,12 +126,31 @@ git-flowは、正確にいうと Vincent Driessen 氏が提唱する「A success
     ```
     git flow feature finish {リポジトリ名}
     ```
-    ```
+## リリース対応
 - developブランチからreleaseブランチを作成
     ```
     git flow release start {リポジトリ名}
-- releaseブランチをdevelopブランチにマージし、releaseブランチを削除
+    ```
+- releaseブランチをmasterブランチにマージし、releaseブランチを削除
     ```
     git flow release finish {リポジトリ名}
     ```
+    - 処理詳細
+        1. releaseブランチをmasterブランチにマージ
+        1. masterブランチにリリースタグ付け
+        1. masterブランチ（タグ1.0）をdevelopブランチにマージ
+        1. releaseブランチの削除
+## リリース後バグ対応
+- masterブランチからhotfixブランチを作成
     ```
+    git flow hotfix start {リポジトリ名}
+    ```
+- hotfixブランチをmasterブランチにマージし、hotfixブランチを削除
+    ```
+    git flow hotfix finish {リポジトリ名}
+    ```
+    - 処理詳細
+        1. hotfixブランチをmasterブランチにマージ
+        1. masterブランチにリリースタグ付け
+        1. masterブランチ（タグ1.1）をdevelopブランチにマージ
+        1. hotfixブランチの削除
