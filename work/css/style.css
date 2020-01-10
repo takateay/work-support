@@ -1,0 +1,20 @@
+@charset "utf-8";
+h1{
+    margin: 0;
+}
+.container{
+    margin:0 auto;
+    padding:0 15px;
+}
+.flex-set{
+    display: flex;
+}
+#hg-001-001{
+    background-image: url("../img/img-001.jpg");
+    background-position:center top;
+    background-repeat:no-repeat;
+    -moz-background-size:cover;
+    background-size:cover;    
+}
+.center-format{
+}
