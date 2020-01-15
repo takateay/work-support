@@ -50,13 +50,6 @@
         ```
         git config --global core.autoCRLF false
         ```
-# 基本
-Gitの設定ファイルは3種類ある。
-|種類|対象範囲|場所|備考|
-|:--|:--|:--|:--|
-|system|システム全体（全ユーザーの全リポジトリ）|/etc/gitconfig|-|
-|global|該当ユーザーの全リポジトリ|~/.gitconfig|ホーム直下|
-|local|該当リポジトリ|repository/.git/config|リポジトリの.git直下|
 # コマンド一覧
 |コマンド|オプション|説明|
 |:--|:--|:--|
@@ -76,6 +69,13 @@ Gitの設定ファイルは3種類ある。
     git rm --cached {ファイル名}
     ```
 # Gitの設定をする(.gitconfig)
+Gitの設定ファイルは3種類ある。
+|種類|対象範囲|場所|備考|
+|:--|:--|:--|:--|
+|system|システム全体（全ユーザーの全リポジトリ）|/etc/gitconfig|-|
+|global|該当ユーザーの全リポジトリ|~/.gitconfig|ホーム直下|
+|local|該当リポジトリ|repository/.git/config|リポジトリの.git直下|
+
 - リポジトリごとのGitの設定を確認する
     ```
     git config --local -l
@@ -124,7 +124,11 @@ Gitの設定ファイルは3種類ある。
     ```
 - 管理対象(インデックス)から削除するだけでファイルはそのまま
     ```
-    git rm --cached -f foo.html~
+    git rm --cached foo.html~
+    ```
+- 管理対象(インデックス)から削除するだけでファイルはそのまま（フォルダ内を再帰的に）
+    ```
+    git rm --cached -r フォルダ名
     ```
 # 空のフォルダをバージョン管理対象にする(.gitkeep)
 # ブランチモデルを利用する(git-flow)
