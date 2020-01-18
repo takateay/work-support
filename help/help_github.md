@@ -39,3 +39,6 @@ Esc
 # 上書き保存して閉じる
 :wq
 ```
+
+https://pages.github.com/
+https://jekyllrb.com/
