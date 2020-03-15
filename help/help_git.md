@@ -268,3 +268,7 @@ WinMargeと連携することで、差分確認が効率的になります。
         ~~~
         git winmerge
         ~~~
+# 向き先を変更する
+`
+git remote set-url origin {新規URL}
+`
