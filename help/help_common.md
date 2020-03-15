@@ -28,6 +28,12 @@
 |Windows|CRLF|\r\n|
 |macOS(Mac OS X)/Linux/Unix|LF|\n|
 |macOS(9以前)|CR|\r|
+# 単位
+|単位|読み|
+|:--|:--|
+|px|ピクセル|
+|p|ポイント|
+
 # 正規表現
 ## 正規表現一覧
 ## 正規表現(用途別)

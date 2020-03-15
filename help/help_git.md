@@ -50,19 +50,32 @@
         ```
         git config --global core.autoCRLF false
         ```
-# 基本
-Gitの設定ファイルは3種類ある。
-|種類|対象範囲|場所|備考|
-|:--|:--|:--|:--|
-|system|システム全体（全ユーザーの全リポジトリ）|/etc/gitconfig|-|
-|global|該当ユーザーの全リポジトリ|~/.gitconfig|ホーム直下|
-|local|該当リポジトリ|repository/.git/config|リポジトリの.git直下|
 # コマンド一覧
 |コマンド|オプション|説明|
 |:--|:--|:--|
 |config||Git設定|
 |config|-l|Git設定の確認|
 # コマンド一覧(用途別)
+- Gitで日本語を表示する
+    ```
+    git config --local core.quotepath false
+    ```
+- Git-GUIの文字コードをUTF-8に変更する（文字化け対策）
+    ```
+    git config --local gui.encoding utf-8
+    ```
+- すでにaddしているものをバージョン管理から対象外にする
+    ```
+    git rm --cached {ファイル名}
+    ```
+# Gitの設定をする(.gitconfig)
+Gitの設定ファイルは3種類ある。
+|種類|対象範囲|場所|備考|
+|:--|:--|:--|:--|
+|system|システム全体（全ユーザーの全リポジトリ）|/etc/gitconfig|-|
+|global|該当ユーザーの全リポジトリ|~/.gitconfig|ホーム直下|
+|local|該当リポジトリ|repository/.git/config|リポジトリの.git直下|
+
 - リポジトリごとのGitの設定を確認する
     ```
     git config --local -l
@@ -75,16 +88,50 @@ Gitの設定ファイルは3種類ある。
     ```
     git config --system -l
     ```
-- Git-GUIの文字コードをUTF-8に変更する（文字化け対策）
-    ```
-    git config --local gui.encoding utf-8
-    ```
-- すでにaddしているものをバージョン管理から対象外にする
-```
-git rm --cached {ファイル名}
-```
 # バージョン管理対象外にする(.gitignore)
-# git-flow
+## .gitignoreの設定
+1. .gitignoreを作成し、書式に従って記述する
+    ```
+    cd {Gitフォルダパス}
+    vim .gitignore
+    i
+    ```
+    - 書式
+        - ハッシュ記号で始まる行はコメントとして扱われる
+        - 空行は無視される
+        - ! マークで始まる行は残りのパターンを否定します
+        - スラッシュ/で終わる場合はディレクトリのみを表す
+        - スラッシュ/で始まる場合はルートディレクトリからを表す
+        - どこにもスラッシュ/が無い場合はシェルのglobパターンとしてファイル名のベース部分にマッチするか検査される
+        - 複数マッチするパターンがある場合は最後にマッチするものが優先される
+    - 記入例
+        |例|説明|
+        |:--|:--|
+        |*~|ファイル名の最後に ~ がある全てのファイル 例) index.html~ 等|
+        |*.[ao]|拡張子が a 又は o のファイル 例) hello.a foo.o|
+        |t/|t ディレクトリは全て無視されます|
+        |v|ファイル名が v の場合無視されるが v がディレクトリ名の場合は無視されません|
+        |!*.t|拡張子 t を持つファイルは無視されません|
+1. .gitignoreを保存して閉じる
+    ```
+    ESC
+    :wq
+    ```
+## .gitignoreで指定する前にgit addしてしまった場合
+- 管理対象から削除され同時にファイルも削除
+    ```
+    git rm -f foo.html~
+    ```
+- 管理対象(インデックス)から削除するだけでファイルはそのまま
+    ```
+    git rm --cached foo.html~
+    ```
+- 管理対象(インデックス)から削除するだけでファイルはそのまま（フォルダ内を再帰的に）
+    ```
+    git rm --cached -r フォルダ名
+    ```
+# 空のフォルダをバージョン管理対象にする(.gitkeep)
+# ブランチモデルを利用する(git-flow)
 ## 概要
 git-flowは、正確にいうと Vincent Driessen 氏が提唱する「A successful Git branching model」というブランチモデルをサポートするツール（コマンド）の名称です。
 一般的には、モデルとツールのどちらの名称としても使われています。git-flowでは、役割が決められた5種類（場合によっては6種類）のブランチを切り替えながら開発を進めていきます。
@@ -154,3 +201,74 @@ git-flowは、正確にいうと Vincent Driessen 氏が提唱する「A success
         1. masterブランチにリリースタグ付け
         1. masterブランチ（タグ1.1）をdevelopブランチにマージ
         1. hotfixブランチの削除
+
+
+# Excelファイルの差分確認
+
+WinMargeと連携することで、差分確認が効率的になります。
+
+[WinMarge公式サイト](https://winmerge.org/)\
+[WinMarge日本語版](https://winmergejp.bitbucket.io/)
+
+## 環境構築
+1. WinMargeのダウンロード
+    1. [WinMargeダウンロード](https://winmerge.org/downloads/)にアクセス
+    1. 環境にあったインストーラをダウンロード
+    　![](./img/winmarge-001.png)
+1. WinMargeの起動
+　![](./img/winmarge-002.png)
+1. Excel比較プラグインの設定をする
+　![](./img/winmarge-003.png)
+1. GitからWinMargeを起動する設定をする
+    1. *ファイル名を指定して実行*を開く
+        ```
+        Windowsキー+R
+        ```
+    1. 以下を入力して*OK*ボタンをクリックする
+        ```
+        %USERPROFILE%\.gitconfig
+        ```
+    1. .gitconfigに以下の記述を追記する。\
+        *※パスは、WinMargeを格納したフォルダに書き換えること*\
+        *※著者の場合、C:/Program Files/WinMerge/WinMergeU.exe⇒C:/work/WinMerge/WinMergeU.exeに書き換える*
+        ```
+        [diff]
+            tool = WinMerge
+        [difftool "WinMerge"]
+            path = C:/Program Files/WinMerge/WinMergeU.exe
+            cmd = \"C:/Program Files/WinMerge/WinMergeU.exe\" -f \"*.*\" -e -u -r \"$LOCAL\" \"$REMOTE\"
+        [merge]
+            tool = WinMerge
+        [mergetool "WinMerge"]
+            path = C:/Program Files/WinMerge/WinMergeU.exe
+            cmd = \"C:/Program Files/WinMerge/WinMergeU.exe\" -e -u \"$LOCAL\" \"$REMOTE\" \"$MERGED\"
+        [alias]
+            windiff = difftool -y -d -t WinMerge
+            winmerge = mergetool -y -t WinMerge
+        ```
+        - WinMargeのオプション（参考）
+            |オプション|説明|
+            |:--|:--|
+            |f|表示するファイル|
+            |e|ESCで閉じれるようにする|
+            |u|履歴に追加しない|
+            |r|サブフォルダを含む比較|
+## Excelの差分の取り方
+1. Gitブランチに移動する
+1. コマンドを実行する
+    - 作業中と直近のコミットとの比較
+        ~~~
+        git windiff
+        ~~~
+    - 直近のコミットと2つ前のコミットの比較
+        ~~~
+        git windiff HEAD~ HEAD
+        ~~~
+    - コンフリクト解消作業を行う
+        ~~~
+        git winmerge
+        ~~~
+# 向き先を変更する
+`
+git remote set-url origin {新規URL}
+`
