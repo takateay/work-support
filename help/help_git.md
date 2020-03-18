@@ -1,3 +1,202 @@
+# 基本操作  
+## バージョン確認  
+~~~
+git --version
+~~~
+## 設定確認  
+~~~
+git config -l
+~~~
+## コマンド実行状態から抜け出す  
+~~~
+:q
+~~~
+## バージョン管理の状態確認  
+~~~
+git status
+~~~
+# リポジトリ操作  
+## gitリポジトリ（ローカル）作成  
+~~~
+git init {ディレクトリ} {オプション}
+git add .  
+git commit -m "{コメント}"  
+~~~
+
+## gitリポジトリ（リモート）作成  
+~~~
+git init --bare --shared
+~~~
+|オプション|説明|
+|:--|:--|
+|--bare|最小限のリポジトリを作成する。もしGIT_DIR環境が設定されていなければ、現在のワーキング・ディレクトリが設定される|
+|--shared|Gitリポジトリが複数のユーザで共有されることを指定する。このオプションは、同じグループに属するユーザがそのリポジトリにpushすることを許可する。|
+## gitリポジトリ削除  
+~~~
+rm -rf .git
+~~~
+
+# ブランチ操作  
+## ブランチの作成  
+~~~
+git branch {ブランチ名}
+~~~
+## ブランチの切り替え  
+~~~
+git checkout {ブランチ名}
+~~~
+## ブランチの作成＆切り替え  
+~~~
+git checkout -b {ブランチ名}
+~~~
+## ブランチ削除  
+~~~
+git branch -d {ブランチ名}
+~~~
+## ブランチ削除（強制）  
+~~~git 
+git branch -D {ブランチ名}
+~~~
+## ローカルブランチの確認  
+~~~
+git branch
+~~~
+## リモートブランチの確認  
+~~~
+git branch -r
+~~~
+## ローカル＆リモートブランチの確認  
+~~~
+git branch -a
+~~~
+# ファイル操作  
+## ファイルを更新対象に追加  
+~~~
+git add {ファイル名}
+~~~
+## 更新対象にしたファイルコミット  
+~~~
+git commit -m "{コメント}"
+~~~
+## コミットしたファイルをリモートリポジトリに反映     
+~~~
+git push origin master 
+~~~
+## リモートリポジトリの状態をローカルリポジトリに反映     
+~~~
+git pull origin master 
+~~~
+~~~
+git add . //すべてのファイル・ディレクトリ
+git add *.css //すべてのCSSファイル
+git add -n //追加されるファイルを調べる
+git add -u //変更されたファイルを追加する
+git rm --cached //addしてしまったファイルを除外
+
+git commit -a //変更のあったファイルすべて
+git commit --amend //直前のコミットを取り消す
+git commit -v //変更点を表示してコミット
+~~~
+
+# コミット取消  
+~~~
+git reset --soft HEAD~2 // 最新のコミットから2件分をワークディレクトリの内容を保持し取り消す
+git reset --hard HEAD~2 // 最新のコミットから2件分のワークディレクトリの内容とコミットを取り消す
+~~~
+
+# コミットメッセージの修正  
+~~~
+git rebase -i HEAD~2 // HEADから2件のコミットメッセージ
+~~~
+上記のコマンドを実行するとVimが起動し、最新から過去2件のコミットが表示されます。
+pickの部分をeditもしくはeに変更後ファイルを保存し、
+ 修正が完了したら--amendオプションを付けてコミットする。
+~~~
+ git commit --amend
+~~~
+最後に下記のコマンドを実行し完了。
+~~~
+git rebase --continue
+~~~
+
+# 作業ディレクトリを指定したコミット時点の状態にまで戻す  
+~~~
+git revert ＜コミット名＞
+~~~
+
+# リモートディレクトリ(origin)の参照先の確認  
+~~~
+git remote -v
+~~~
+git config --local core.shared=true
+# 用途別まとめ  
+# 日本語文字化け
+~~~
+git config --local core.quotepath false
+git config --local gui.encoding=utf-8
+git config --local gui.encoding cp932
+git config --local gui.encoding false
+~~~
+## リモート作成手順(ローカルで作業したものを土台にするパターン)  
+### リモート側作業  
+~~~
+cd {リモートパス}  
+mkdir {作業フォルダ名}  
+cd {作業フォルダ名}  
+git init --shared
+git checkout -b tmp
+~~~
+### ローカル側作業  
+~~~
+git push origin master
+~~~
+### リモート側作業  
+~~~
+git checkout master
+~~~
+
+set GIT_TRACE=1
+set GIT_CURL_VERBOSE=1
+git clone {リモートパス} > git.log 2>&1
+cd
+### WinMarge設定
+~/.gitconfig
+~~~
+[diff]
+    tool = WinMerge
+[difftool "WinMerge"]
+    path = C:/Program Files/WinMerge/WinMergeU.exe
+    cmd = \"C:/Program Files/WinMerge/WinMergeU.exe\" -f \"*.*\" -e -u -r \"$LOCAL\" \"$REMOTE\"
+[merge]
+    tool = WinMerge
+[mergetool "WinMerge"]
+    path = C:/Program Files/WinMerge/WinMergeU.exe
+    cmd = \"C:/Program Files/WinMerge/WinMergeU.exe\" -e -u \"$LOCAL\" \"$REMOTE\" \"$MERGED\"
+[alias]
+    windiff = difftool -y -d -t WinMerge
+    winmerge = mergetool -y -t WinMerge
+~~~
+~~~
+git windiff
+~~~
+~~~
+ git windiff HEAD~~~ HEAD~
+~~~
+
+コンフリクト発生時
+
+~~~
+git winmerge
+~~~
+
+WinMargeの引数
+~~~
+ -f "*.*" … 表示するファイルタイプ
+ -e … ESCで閉じれるようにする
+ -u … 履歴に追加しない
+ -r … サブフォルダを含む比較
+~~~
+
 # Gitの使い方
 ## 初期設定
 1. 現在の作業フォルダを確認する
