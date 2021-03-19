@@ -3,8 +3,18 @@
 ## ![ICON画像](./img/README_ICON_MINI.png)*概要-Overview*
 - 個人用のソフトウェア開発マニュアルです。
 - 仕事で使える情報やツールをまとめていきます。
-- 開発PC：Windows10
-- サーバ：Linux(RedHat)
+## ![ICON画像](./img/README_ICON_MINI.png)*環境-Environment*
+|||
+|:--:|:--|
+|職種|Webアプリ開発|
+|開発PC|Windows10|
+|成果物ドキュメント|Excel|
+|フロント|Windows10,Edge|
+|サーバ|Linux(RedHat)|
+|マークアップ言語|HTML5|
+|スタイルシート言語|CSS3|
+|プログラミング言語|Java,JavaScript,ShellScript|
+|フレームワーク|Spring|
 ## ![ICON画像](./img/README_ICON_MINI.png)*対象者-Target*
 - Japanese SIer
 ## ![ICON画像](./img/README_ICON_MINI.png)*目次-Table of contents*
@@ -29,3 +39,6 @@
 1. [Vim](./help/help_vim.md)
 1. [VScode](./help/help_vscode.md)
 1. [サクラエディタ](./help/help_sakura.md)
+
+# 仕事ですぐ使えるツール
+[こちら](./tool/README.md)
