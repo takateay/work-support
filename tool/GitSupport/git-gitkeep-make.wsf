@@ -1,0 +1,45 @@
+<job id="createGitFolder">
+<script language="JScript">
+/*
+ .gitignoreと.gitkeepを配布する。
+ フォルダを選択して、送る(N)→当ファイルを選択して実行する。
+*/
+var fso = WScript.CreateObject('Scripting.FileSystemObject');
+var setupFile01 = '.gitignore';
+var setupFile02 = '.gitkeep';
+
+for (i = 0; i < WScript.Arguments.Count(); i++) {
+    // WScript.Echo(WScript.Arguments(i));
+    var generateFolder = WScript.Arguments(i);
+    // WScript.Echo(generateFolder);
+    makeHiddenFile(generateFolder, setupFile01);
+    getFolderList(generateFolder, setupFile02);
+}
+fso = null;
+WScript.Echo('実行しました。');
+/*
+ フォルダ内のフォルダを再帰取得し、隠しファイルを作成
+*/
+function getFolderList(targetFolder, setupFile) {
+    var em = new Enumerator(fso.GetFolder(targetFolder).SubFolders);
+    for (em.moveFirst(); !em.atEnd(); em.moveNext()) {
+        // WScript.Echo(em.item());
+        makeHiddenFile(em.item(), setupFile);
+        getFolderList(em.item(), setupFile);
+    }
+}
+/*
+ 隠しファイルを作成
+*/
+function makeHiddenFile(setupFolder, setupFile) {
+    var mkfileName = setupFolder + '\\' + setupFile
+    // ファイルが存在しない場合
+    if (!fso.FileExists(mkfileName)) {
+        var mkfile = fso.CreateTextFile(mkfileName);
+        // 隠しファイル属性追加
+        mkfile = fso.GetFile(mkfileName);
+        mkfile.attributes = 2;
+    }
+}
+</script>
+</job>
